@@ -13,7 +13,7 @@
     <meta property="og:title" content="Anderson Igarashi · Playable Game Developer" />
     <meta
       property="og:description"
-      content="HTML5 playable ads, Unity and AI-assisted pipelines. Play three playable ads in the browser."
+      content="HTML5 playable ads, Unity and AI-assisted pipelines. Play four playable ads in the browser."
     />
     <meta property="og:image" content="https://andersonigarashi.github.io/img/og.png" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -360,8 +360,14 @@
       /* ---------- playables ---------- */
       .cards {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 24px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 20px;
+      }
+
+      @media (max-width: 1100px) {
+        .cards {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
       }
 
       .card {
@@ -916,6 +922,35 @@
                 <a href="https://andersonigarashi.github.io/coloring_using_number/play.html" target="_blank" rel="noopener">Full screen</a>
                 <a href="https://github.com/AndersonIgarashi/coloring_using_number" target="_blank" rel="noopener">Source</a>
                 <a href="https://github.com/AndersonIgarashi/coloring_using_number#how-it-was-built-ai-workflow" target="_blank" rel="noopener">How it was built</a>
+              </p>
+            </div>
+          </article>
+
+          <article class="card" data-play="https://andersonigarashi.github.io/help_the_character/play.html" style="--accent: rgba(255, 150, 60, 0.45)">
+            <div class="stage">
+              <div class="phone">
+                <img src="img/mine-rescue.webp" alt="Mine Rescue: a trapped miner, a lit fuse and rubble pouring into a gem board" loading="lazy" />
+              </div>
+              <a class="btn cta play-btn" href="https://andersonigarashi.github.io/help_the_character/play.html" target="_blank" rel="noopener">▶ Play</a>
+              <button class="btn ghost stop-btn" type="button">■ Stop</button>
+            </div>
+            <div class="card-body">
+              <h3>Mine Rescue</h3>
+              <p>
+                A cave-in has trapped a miner and the TNT fuse is lit. Match gems under the rubble and the rocks pour into
+                the holes with real physics until the way out opens. Every model was built in Blender through an AI-driven
+                pipeline.
+              </p>
+              <ul class="chips">
+                <li>TypeScript</li>
+                <li>Three.js</li>
+                <li>Blender MCP</li>
+                <li>Rock physics</li>
+              </ul>
+              <p class="links">
+                <a href="https://andersonigarashi.github.io/help_the_character/play.html" target="_blank" rel="noopener">Full screen</a>
+                <a href="https://github.com/AndersonIgarashi/help_the_character" target="_blank" rel="noopener">Source</a>
+                <a href="https://github.com/AndersonIgarashi/help_the_character#how-it-was-built-ai-workflow" target="_blank" rel="noopener">How it was built</a>
               </p>
             </div>
           </article>
