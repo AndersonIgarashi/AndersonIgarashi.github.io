@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Anderson Igarashi · Playable Game Developer</title>
+    <meta
+      name="description"
+      content="Playable Game Developer and Technical Artist. HTML5 playable ads in TypeScript, Three.js and Pixi.js, Unity games, and AI-assisted production. Play the playables right on this page."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://andersonigarashi.github.io/" />
+    <meta property="og:title" content="Anderson Igarashi · Playable Game Developer" />
+    <meta
+      property="og:description"
+      content="HTML5 playable ads, Unity and AI-assisted pipelines. Play three playable ads in the browser."
+    />
+    <meta property="og:image" content="https://andersonigarashi.github.io/img/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#1a1150" />
+    <link rel="icon" href="favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --night: #1a1150;
+        --night-deep: #120b3a;
+        --ink: #1d1646;
+        --panel: rgba(255, 255, 255, 0.06);
+        --panel-edge: rgba(226, 220, 255, 0.14);
+        --text: #f4f1ff;
+        --muted: #c3bbef;
+        --violet: #6a5cff;
+        --sky: #36c2ff;
+        --energy: #45f0df;
+        --pink: #ff4fd8;
+        --yellow: #ffd23f;
+        --cta-top: #8dff5e;
+        --cta-bottom: #1ec95a;
+        --cta-edge: #0e8a3b;
+        --radius: 22px;
+        --gutter: clamp(16px, 4vw, 40px);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        background: var(--night-deep);
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(1200px 600px at 15% -10%, rgba(106, 92, 255, 0.45), transparent 60%),
+          radial-gradient(900px 500px at 100% 10%, rgba(255, 79, 216, 0.18), transparent 60%),
+          linear-gradient(180deg, var(--night) 0, var(--night-deep) 1400px);
+        background-color: var(--night-deep);
+        color: var(--text);
+        font-family: 'Nunito', system-ui, sans-serif;
+        font-weight: 500;
+        line-height: 1.55;
+        overflow-x: hidden;
+      }
+
+      a {
+        color: var(--energy);
+      }
+
+      a:focus-visible,
+      button:focus-visible {
+        outline: 3px solid var(--yellow);
+        outline-offset: 3px;
+      }
+
+      h1,
+      h2,
+      h3,
+      .display {
+        font-family: 'Lilita One', system-ui, sans-serif;
+        font-weight: 400;
+        letter-spacing: 0.01em;
+        line-height: 1.1;
+        margin: 0;
+      }
+
+      .wrap {
+        width: min(1160px, 100%);
+        margin: 0 auto;
+        padding: 0 var(--gutter);
+      }
+
+      /* ---------- nav ---------- */
+      .top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding-top: 20px;
+      }
+
+      .mark {
+        display: inline-grid;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: var(--violet);
+        color: #fff;
+        font-family: 'Lilita One', system-ui, sans-serif;
+        font-size: 22px;
+        text-decoration: none;
+        position: relative;
+        box-shadow: 0 6px 0 #3f33b8;
+      }
+
+      .mark::after {
+        content: '';
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--energy);
+      }
+
+      .top nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 4px 18px;
+      }
+
+      .top nav a {
+        color: var(--muted);
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 15px;
+      }
+
+      .top nav a:hover {
+        color: #fff;
+      }
+
+      /* ---------- hero ---------- */
+      .hero {
+        position: relative;
+        padding-bottom: clamp(48px, 8vw, 96px);
+      }
+
+      .hero::after {
+        content: '';
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 260px;
+        background-image:
+          linear-gradient(rgba(106, 92, 255, 0.35) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(106, 92, 255, 0.35) 1px, transparent 1px);
+        background-size: 56px 56px;
+        transform: perspective(420px) rotateX(58deg);
+        transform-origin: bottom;
+        mask-image: linear-gradient(to top, #000 10%, transparent 85%);
+        -webkit-mask-image: linear-gradient(to top, #000 10%, transparent 85%);
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        align-items: center;
+        gap: 40px;
+        padding-top: clamp(40px, 7vw, 88px);
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 18px;
+        padding: 6px 14px;
+        border-radius: 999px;
+        background: var(--panel);
+        border: 1px solid var(--panel-edge);
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .eyebrow .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--cta-top);
+        box-shadow: 0 0 10px var(--cta-top);
+      }
+
+      .hero h1 {
+        font-size: clamp(44px, 7vw, 84px);
+        text-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+      }
+
+      .role {
+        margin: 10px 0 0;
+        font-family: 'Lilita One', system-ui, sans-serif;
+        font-size: clamp(24px, 3.2vw, 36px);
+        color: var(--energy);
+      }
+
+      .lede {
+        max-width: 56ch;
+        margin: 20px 0 0;
+        font-size: clamp(17px, 1.6vw, 19px);
+        color: var(--text);
+      }
+
+      .facts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 22px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .facts li {
+        padding: 6px 12px;
+        border-radius: 10px;
+        background: rgba(69, 240, 223, 0.1);
+        border: 1px solid rgba(69, 240, 223, 0.35);
+        color: #d8fffb;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 30px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 22px;
+        border-radius: 16px;
+        font-family: 'Lilita One', system-ui, sans-serif;
+        font-size: 19px;
+        text-decoration: none;
+        color: #fff;
+        background: linear-gradient(#7d71ff, var(--violet));
+        box-shadow: 0 5px 0 #3f33b8;
+        border: 0;
+        cursor: pointer;
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 7px 0 #3f33b8;
+      }
+
+      .btn:active {
+        transform: translateY(4px);
+        box-shadow: 0 1px 0 #3f33b8;
+      }
+
+      .btn.cta {
+        color: #0b3d1c;
+        background: linear-gradient(var(--cta-top), var(--cta-bottom));
+        box-shadow: 0 5px 0 var(--cta-edge);
+      }
+
+      .btn.cta:hover {
+        box-shadow: 0 7px 0 var(--cta-edge);
+      }
+
+      .btn.cta:active {
+        box-shadow: 0 1px 0 var(--cta-edge);
+      }
+
+      .btn.ghost {
+        background: var(--panel);
+        border: 1px solid var(--panel-edge);
+        box-shadow: none;
+      }
+
+      .btn.ghost:hover,
+      .btn.ghost:active {
+        box-shadow: none;
+      }
+
+      .fan {
+        position: relative;
+        height: 470px;
+      }
+
+      .fan img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 200px;
+        aspect-ratio: 390 / 844;
+        object-fit: cover;
+        border-radius: 28px;
+        border: 8px solid #100a30;
+        box-shadow: 0 24px 40px rgba(0, 0, 0, 0.45);
+      }
+
+      .fan img:nth-child(1) {
+        transform: translate(-118%, -48%) rotate(-9deg);
+      }
+
+      .fan img:nth-child(2) {
+        transform: translate(-50%, -54%);
+        z-index: 2;
+      }
+
+      .fan img:nth-child(3) {
+        transform: translate(18%, -48%) rotate(9deg);
+      }
+
+      /* ---------- sections ---------- */
+      section {
+        padding: clamp(56px, 8vw, 96px) 0 0;
+      }
+
+      .section-head {
+        max-width: 720px;
+        margin-bottom: 32px;
+      }
+
+      .kicker {
+        margin: 0 0 8px;
+        color: var(--yellow);
+        font-weight: 800;
+        font-size: 14px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      section h2 {
+        font-size: clamp(34px, 4.6vw, 52px);
+      }
+
+      .section-head p:last-child {
+        margin: 14px 0 0;
+        color: var(--muted);
+        font-size: 18px;
+      }
+
+      /* ---------- playables ---------- */
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      .card {
+        display: flex;
+        flex-direction: column;
+        border-radius: var(--radius);
+        background: var(--panel);
+        border: 1px solid var(--panel-edge);
+        overflow: hidden;
+      }
+
+      .stage {
+        display: grid;
+        place-items: center;
+        padding: 26px 20px 22px;
+        background: radial-gradient(circle at 50% 35%, var(--accent, #6a5cff) 0%, transparent 70%);
+      }
+
+      .phone {
+        position: relative;
+        width: min(260px, 100%);
+        aspect-ratio: 390 / 844;
+        border-radius: 34px;
+        border: 9px solid #100a30;
+        background: #100a30;
+        box-shadow: 0 22px 44px rgba(0, 0, 0, 0.45);
+        overflow: hidden;
+      }
+
+      .phone img,
+      .phone iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        border-radius: 25px;
+      }
+
+      .phone img {
+        object-fit: cover;
+        transition: filter 0.2s ease;
+      }
+
+      .phone:hover img {
+        filter: brightness(0.8);
+      }
+
+      .phone img {
+        cursor: pointer;
+      }
+
+      .play-btn,
+      .stop-btn {
+        margin-top: 16px;
+        white-space: nowrap;
+      }
+
+      .stop-btn {
+        display: none;
+      }
+
+      .card.is-playing .play-btn,
+      .card.is-playing .phone img {
+        display: none;
+      }
+
+      .card.is-playing .stop-btn {
+        display: inline-flex;
+      }
+
+      .card-body {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        flex: 1;
+        padding: 22px 22px 24px;
+      }
+
+      .card-body h3 {
+        font-size: 28px;
+      }
+
+      .card-body p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .chips li {
+        padding: 3px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--panel-edge);
+        color: var(--text);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 16px;
+        margin-top: auto !important;
+        padding-top: 6px;
+        font-weight: 800;
+      }
+
+      .links a {
+        text-decoration: none;
+      }
+
+      .links a:hover {
+        text-decoration: underline;
+      }
+
+      /* ---------- AI workflow ---------- */
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        counter-reset: step;
+      }
+
+      .steps li {
+        position: relative;
+        padding: 22px 20px 20px;
+        border-radius: var(--radius);
+        background: var(--panel);
+        border: 1px solid var(--panel-edge);
+        counter-increment: step;
+      }
+
+      .steps li::before {
+        content: counter(step);
+        display: grid;
+        place-items: center;
+        width: 36px;
+        height: 36px;
+        margin-bottom: 12px;
+        border-radius: 11px;
+        background: var(--violet);
+        font-family: 'Lilita One', system-ui, sans-serif;
+        font-size: 20px;
+      }
+
+      .steps h3 {
+        font-size: 22px;
+      }
+
+      .steps p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 16px;
+      }
+
+      .caught {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 28px;
+      }
+
+      .caught article {
+        padding: 20px 22px;
+        border-radius: var(--radius);
+        border-left: 4px solid var(--pink);
+        background: rgba(255, 79, 216, 0.07);
+      }
+
+      .caught h3 {
+        font-size: 21px;
+      }
+
+      .caught p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 16px;
+      }
+
+      .caught .from {
+        display: block;
+        margin-top: 10px;
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      .tools {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 24px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .tools li {
+        padding: 6px 12px;
+        border-radius: 10px;
+        background: var(--panel);
+        border: 1px solid var(--panel-edge);
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+      /* ---------- shipped + art ---------- */
+      .duo {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      .tile {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 26px;
+        border-radius: var(--radius);
+        background: var(--panel);
+        border: 1px solid var(--panel-edge);
+      }
+
+      .tile h3 {
+        font-size: 28px;
+      }
+
+      .tile p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .shot {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        border-radius: 16px;
+      }
+
+      .title-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .title-row img {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        flex: none;
+      }
+
+      .tile .label {
+        color: var(--yellow);
+        font-weight: 800;
+        font-size: 14px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .reel {
+        position: relative;
+        display: block;
+        aspect-ratio: 16 / 9;
+        border-radius: 16px;
+        overflow: hidden;
+        background: #100a30;
+      }
+
+      .reel img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .reel span {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: rgba(18, 11, 58, 0.35);
+        font-family: 'Lilita One', system-ui, sans-serif;
+        font-size: 24px;
+        color: #fff;
+      }
+
+      .tile .btn {
+        align-self: flex-start;
+        margin-top: auto;
+      }
+
+      /* ---------- about ---------- */
+      .about {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 32px;
+      }
+
+      .about p {
+        margin: 0 0 14px;
+        font-size: 18px;
+      }
+
+      .skills {
+        display: grid;
+        gap: 14px;
+        margin: 0;
+      }
+
+      .skills div {
+        padding: 16px 18px;
+        border-radius: 16px;
+        background: var(--panel);
+        border: 1px solid var(--panel-edge);
+      }
+
+      .skills dt {
+        font-family: 'Lilita One', system-ui, sans-serif;
+        font-size: 18px;
+        color: var(--energy);
+      }
+
+      .skills dd {
+        margin: 4px 0 0;
+        color: var(--muted);
+      }
+
+      /* ---------- contact ---------- */
+      .contact {
+        margin: clamp(56px, 8vw, 96px) 0 0;
+        padding: clamp(32px, 5vw, 56px);
+        border-radius: 28px;
+        background: linear-gradient(135deg, rgba(106, 92, 255, 0.55), rgba(255, 79, 216, 0.28));
+        border: 1px solid var(--panel-edge);
+        text-align: center;
+      }
+
+      .contact h2 {
+        font-size: clamp(32px, 4.4vw, 48px);
+      }
+
+      .contact p {
+        margin: 12px auto 0;
+        max-width: 52ch;
+        font-size: 18px;
+      }
+
+      .contact .actions {
+        justify-content: center;
+      }
+
+      footer {
+        padding: 36px 0 48px;
+        color: var(--muted);
+        font-size: 14px;
+        text-align: center;
+      }
+
+      /* ---------- responsive ---------- */
+      @media (max-width: 1000px) {
+        .hero-grid,
+        .about {
+          grid-template-columns: 1fr;
+        }
+
+        .fan {
+          display: none;
+        }
+
+        .cards {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .steps {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 720px) {
+        .top nav {
+          display: none;
+        }
+
+        .cards,
+        .steps,
+        .caught,
+        .duo {
+          grid-template-columns: 1fr;
+        }
+
+        .btn {
+          font-size: 17px;
+          padding: 11px 18px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        .btn {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="wrap">
+        <div class="top">
+          <a class="mark" href="#" aria-label="Anderson Igarashi, home">AI</a>
+          <nav aria-label="Sections">
+            <a href="#playables">Playables</a>
+            <a href="#ai">AI workflow</a>
+            <a href="#shipped">Shipped</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+          </nav>
+        </div>
+
+        <div class="hero-grid">
+          <div>
+            <p class="eyebrow"><span class="dot" aria-hidden="true"></span>Brazil · UTC-3 · Remote</p>
+            <h1>Anderson Igarashi</h1>
+            <p class="role">Playable Game Developer</p>
+            <p class="lede">
+              I turn creative briefs into short, polished playable experiences, in HTML5 with TypeScript, Three.js and
+              Pixi.js, or in Unity. I use AI tools every day to build faster, and I review and own everything they
+              produce.
+            </p>
+            <ul class="facts">
+              <li>8+ years in game development</li>
+              <li>3+ years in playable ads</li>
+              <li>Technical artist: 3D, VFX, shaders</li>
+            </ul>
+            <div class="actions">
+              <a class="btn cta" href="#playables">▶ Play my playables</a>
+              <a class="btn ghost" href="https://www.linkedin.com/in/anderson-igarashi/" target="_blank" rel="noopener">LinkedIn</a>
+              <a class="btn ghost" href="https://github.com/AndersonIgarashi" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </div>
+          <div class="fan" aria-hidden="true">
+            <img src="img/build-your-ai.webp" alt="" />
+            <img src="img/dream-house.webp" alt="" />
+            <img src="img/pixel-splash.webp" alt="" />
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section id="playables">
+        <div class="section-head">
+          <p class="kicker">Playable ads</p>
+          <h2>Play them right here</h2>
+          <p>
+            Each one is a complete playable: first-tap gameplay, tutorial hand, game feel, end card and CTA, shipped as a
+            single HTML file for ad networks. Press Play to run it inside the phone, or open it full screen.
+          </p>
+        </div>
+
+        <div class="cards">
+          <article class="card" data-play="https://andersonigarashi.github.io/robot_rescue/play.html?dev=0" style="--accent: rgba(106, 92, 255, 0.55)">
+            <div class="stage">
+              <div class="phone">
+                <img src="img/build-your-ai.webp" alt="Build Your AI: a robot racer on a neon highway, ready to run" loading="lazy" />
+              </div>
+              <a class="btn cta play-btn" href="https://andersonigarashi.github.io/robot_rescue/play.html" target="_blank" rel="noopener">▶ Play</a>
+              <button class="btn ghost stop-btn" type="button">■ Stop</button>
+            </div>
+            <div class="card-body">
+              <h3>Build Your AI</h3>
+              <p>
+                Build an AI racer in three taps and watch it assemble in 3D. Your choices decide what it has to dodge on a
+                neon highway, and the run freezes one step before impact.
+              </p>
+              <ul class="chips">
+                <li>TypeScript</li>
+                <li>Three.js</li>
+                <li>GLSL</li>
+                <li>Procedural 3D and audio</li>
+              </ul>
+              <p class="links">
+                <a href="https://andersonigarashi.github.io/robot_rescue/play.html" target="_blank" rel="noopener">Full screen</a>
+                <a href="https://github.com/AndersonIgarashi/robot_rescue" target="_blank" rel="noopener">Source</a>
+                <a href="https://github.com/AndersonIgarashi/robot_rescue#how-it-was-built-ai-workflow" target="_blank" rel="noopener">How it was built</a>
+              </p>
+            </div>
+          </article>
+
+          <article class="card" data-play="https://andersonigarashi.github.io/HouseCleanerPlayable/play.html" style="--accent: rgba(54, 194, 255, 0.45)">
+            <div class="stage">
+              <div class="phone">
+                <img src="img/dream-house.webp" alt="Build Your Dream House: a wrecked house and a yard full of debris" loading="lazy" />
+              </div>
+              <a class="btn cta play-btn" href="https://andersonigarashi.github.io/HouseCleanerPlayable/play.html" target="_blank" rel="noopener">▶ Play</a>
+              <button class="btn ghost stop-btn" type="button">■ Stop</button>
+            </div>
+            <div class="card-body">
+              <h3>Build Your Dream House</h3>
+              <p>
+                Sweep a wrecked yard, watch the house rebuild itself, then paint the walls and roof with a roller. Every
+                model was built in Blender through an AI-driven pipeline.
+              </p>
+              <ul class="chips">
+                <li>three.js</li>
+                <li>pixi.js</li>
+                <li>Blender MCP</li>
+                <li>Flat-color atlas</li>
+              </ul>
+              <p class="links">
+                <a href="https://andersonigarashi.github.io/HouseCleanerPlayable/play.html" target="_blank" rel="noopener">Full screen</a>
+                <a href="https://github.com/AndersonIgarashi/HouseCleanerPlayable" target="_blank" rel="noopener">Source</a>
+                <a href="https://github.com/AndersonIgarashi/HouseCleanerPlayable#how-it-was-built-ai-workflow" target="_blank" rel="noopener">How it was built</a>
+              </p>
+            </div>
+          </article>
+
+          <article class="card" data-play="https://andersonigarashi.github.io/coloring_using_number/play.html" style="--accent: rgba(255, 210, 63, 0.4)">
+            <div class="stage">
+              <div class="phone">
+                <img src="img/pixel-splash.webp" alt="Pixel Splash: a pixel-art picture being painted color by number" loading="lazy" />
+              </div>
+              <a class="btn cta play-btn" href="https://andersonigarashi.github.io/coloring_using_number/play.html" target="_blank" rel="noopener">▶ Play</a>
+              <button class="btn ghost stop-btn" type="button">■ Stop</button>
+            </div>
+            <div class="card-body">
+              <h3>Pixel Splash</h3>
+              <p>
+                Tap a color and a drop of paint jumps onto the picture and splashes a wave across every matching cell.
+                The font, logo, icons and sounds are all generated by code.
+              </p>
+              <ul class="chips">
+                <li>TypeScript</li>
+                <li>DOM and CSS</li>
+                <li>Web Animations</li>
+                <li>Python asset tools</li>
+              </ul>
+              <p class="links">
+                <a href="https://andersonigarashi.github.io/coloring_using_number/play.html" target="_blank" rel="noopener">Full screen</a>
+                <a href="https://github.com/AndersonIgarashi/coloring_using_number" target="_blank" rel="noopener">Source</a>
+                <a href="https://github.com/AndersonIgarashi/coloring_using_number#how-it-was-built-ai-workflow" target="_blank" rel="noopener">How it was built</a>
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="ai">
+        <div class="section-head">
+          <p class="kicker">AI workflow</p>
+          <h2>AI builds fast. I decide what ships.</h2>
+          <p>
+            AI agents write much of my code and generate many of my assets. My job is the direction and the review: I play
+            every build, find what is wrong, and fix it or send it back.
+          </p>
+        </div>
+
+        <ol class="steps">
+          <li>
+            <h3>Brief</h3>
+            <p>Scope, flow, art direction and the one feeling the ad has to leave. I draft with ChatGPT, then edit it myself.</p>
+          </li>
+          <li>
+            <h3>Build with agents</h3>
+            <p>Claude Code writes TypeScript and shaders in the repo, one commit per milestone. Through the Blender MCP it also models the 3D assets.</p>
+          </li>
+          <li>
+            <h3>Play and review</h3>
+            <p>I play every build on a phone and on desktop, at every aspect ratio, and check the console, the frame rate and the build size.</p>
+          </li>
+          <li>
+            <h3>Fix and own</h3>
+            <p>I send back what feels wrong, fix art by hand when that is faster, and can explain every line that ships.</p>
+          </li>
+        </ol>
+
+        <div class="caught">
+          <article>
+            <h3>The ending had no purpose</h3>
+            <p>
+              The first build ended on a reveal and a CTA, and it left the player asking "so what?". I designed a runner
+              end card where your choices decide what your racer has to dodge.
+            </p>
+            <a class="from" href="https://github.com/AndersonIgarashi/robot_rescue#how-it-was-built-ai-workflow" target="_blank" rel="noopener">Build Your AI →</a>
+          </article>
+          <article>
+            <h3>A "z-fight" that wasn't one</h3>
+            <p>
+              I spotted flickering stripes on the building windows. The cause was interpolation noise amplified by a hash
+              in the shader, so the fix was flat varyings, not a depth offset.
+            </p>
+            <a class="from" href="https://github.com/AndersonIgarashi/robot_rescue#how-it-was-built-ai-workflow" target="_blank" rel="noopener">Build Your AI →</a>
+          </article>
+          <article>
+            <h3>Generated meshes with z-fighting</h3>
+            <p>
+              I fixed three generated models by hand in Blender, then had the pipeline re-export from the .blend file
+              instead of regenerating over my edits.
+            </p>
+            <a class="from" href="https://github.com/AndersonIgarashi/HouseCleanerPlayable#how-it-was-built-ai-workflow" target="_blank" rel="noopener">Build Your Dream House →</a>
+          </article>
+          <article>
+            <h3>Cut what nobody sees</h3>
+            <p>
+              I asked for a pixel-art wink on the finished picture, then cut it after seeing the build: at that size no one
+              notices it, so it only cost processing.
+            </p>
+            <a class="from" href="https://github.com/AndersonIgarashi/coloring_using_number#how-it-was-built-ai-workflow" target="_blank" rel="noopener">Pixel Splash →</a>
+          </article>
+        </div>
+
+        <ul class="tools" aria-label="AI tools I use">
+          <li>Claude Code</li>
+          <li>ChatGPT</li>
+          <li>Blender MCP</li>
+          <li>Python generators (numpy, Pillow)</li>
+          <li>Headless browser QA (puppeteer)</li>
+        </ul>
+      </section>
+
+      <section id="shipped">
+        <div class="section-head">
+          <p class="kicker">Beyond playables</p>
+          <h2>Shipped games and technical art</h2>
+        </div>
+
+        <div class="duo">
+          <article class="tile">
+            <span class="label">On Google Play · Toninha Games</span>
+            <img class="shot" src="img/cuteball.webp" alt="Cuteball Puzzle Adventure title screen" loading="lazy" />
+            <div class="title-row">
+              <img src="img/cuteball-icon.webp" alt="" />
+              <h3>Cuteball Puzzle Adventure</h3>
+            </div>
+            <p>
+              My own mobile game, published under my Toninha Games label. I took it from idea to store on my own:
+              gameplay, UI, ad integration, in-app purchases, analytics and release.
+            </p>
+            <a class="btn" href="https://play.google.com/store/apps/details?id=com.ToninhaGames.robloball" target="_blank" rel="noopener">See it on Google Play</a>
+          </article>
+          <article class="tile">
+            <span class="label">VFX · shaders · 3D</span>
+            <a class="reel" href="https://www.youtube.com/watch?v=smPp1w7Z7aY" target="_blank" rel="noopener">
+              <img src="https://i.ytimg.com/vi/smPp1w7Z7aY/hqdefault.jpg" alt="VFX reel thumbnail" loading="lazy" />
+              <span>▶ Watch the VFX reel</span>
+            </a>
+            <p>Real-time VFX, shaders and 3D art, optimized for mobile and standalone hardware.</p>
+            <a class="btn" href="https://www.artstation.com/andersonigarashi" target="_blank" rel="noopener">ArtStation</a>
+          </article>
+        </div>
+      </section>
+
+      <section id="about">
+        <div class="section-head">
+          <p class="kicker">About</p>
+          <h2>From brief to delivery</h2>
+        </div>
+        <div class="about">
+          <div>
+            <p>
+              I'm a Playable Game Developer and Technical Artist with 8+ years in game development and 3+ years focused on
+              playable games, interactive ads and rapid prototyping.
+            </p>
+            <p>
+              I take a creative brief to a shipped, optimized build on my own: mechanics, UI, onboarding, feedback and
+              polish, then testing across devices and delivery. I work in Unity and C#, and in TypeScript and JavaScript
+              with Three.js and Pixi.js. My background in 3D, VFX and shaders means I can also build and optimize the art
+              myself.
+            </p>
+            <p>
+              AI tools are part of how I work every day, for code, prototyping, 3D assets and audio. I'm comfortable working
+              with little direction in a fast-moving team, and I talk directly with design, product and engineering.
+            </p>
+          </div>
+          <dl class="skills">
+            <div>
+              <dt>Game development</dt>
+              <dd>Unity, C#, TypeScript, JavaScript, HTML5, CSS</dd>
+            </div>
+            <div>
+              <dt>Web rendering</dt>
+              <dd>Three.js, Pixi.js, WebGL, GLSL, Web Animations, Web Audio</dd>
+            </div>
+            <div>
+              <dt>Playable ads</dt>
+              <dd>Single-file builds, CTA and store redirects, MRAID, analytics events, ad-network SDKs</dd>
+            </div>
+            <div>
+              <dt>Technical art</dt>
+              <dd>Blender, VFX, shaders, performance and asset optimization</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section id="contact" class="contact">
+        <h2>Let's build something playable</h2>
+        <p>I'm open to remote work. Based in Brazil (UTC-3).</p>
+        <div class="actions">
+          <a class="btn cta" href="mailto:anderigarashi@gmail.com">anderigarashi@gmail.com</a>
+          <a class="btn ghost" href="https://www.linkedin.com/in/anderson-igarashi/" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn ghost" href="https://github.com/AndersonIgarashi" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn ghost" href="https://www.artstation.com/andersonigarashi" target="_blank" rel="noopener">ArtStation</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>© Anderson Igarashi</footer>
+
+    <script>
+      (() => {
+        const wide = window.matchMedia('(min-width: 721px)');
+        let active = null;
+
+        const stop = (card) => {
+          card.querySelector('iframe')?.remove();
+          card.classList.remove('is-playing');
+          if (active === card) active = null;
+        };
+
+        document.querySelectorAll('[data-play]').forEach((card) => {
+          const title = card.querySelector('h3').textContent;
+          card.querySelector('.play-btn').addEventListener('click', (event) => {
+            // Phones get the playable full screen; wider screens run it inside the frame, one at a time,
+            // so only one WebGL context is alive.
+            if (!wide.matches) return;
+            event.preventDefault();
+            if (active && active !== card) stop(active);
+            const frame = document.createElement('iframe');
+            frame.src = card.dataset.play;
+            frame.title = `${title} playable`;
+            frame.allow = 'autoplay; fullscreen';
+            card.querySelector('.phone').appendChild(frame);
+            card.classList.add('is-playing');
+            active = card;
+            frame.focus();
+          });
+          card.querySelector('.phone img').addEventListener('click', () => card.querySelector('.play-btn').click());
+          card.querySelector('.stop-btn').addEventListener('click', () => stop(card));
+        });
+      })();
+    </script>
+  </body>
+</html>
