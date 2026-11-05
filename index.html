@@ -13,7 +13,7 @@
     <meta property="og:title" content="Anderson Igarashi · Playable Game Developer" />
     <meta
       property="og:description"
-      content="HTML5 playable ads, Unity and AI-assisted pipelines. Play five playable ads in the browser."
+      content="HTML5 playable ads, Unity and AI-assisted pipelines. Play four playable ads in the browser."
     />
     <meta property="og:image" content="https://andersonigarashi.github.io/img/og.png" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -358,7 +358,7 @@
       }
 
       /* ---------- playables ---------- */
-      /* Three per row, the last row centred, so any number of playables lines up. */
+      /* Four per row; with five or more playables, three per row with the last row centred. */
       .cards {
         display: flex;
         flex-wrap: wrap;
@@ -367,12 +367,17 @@
       }
 
       .cards > .card {
-        flex: 0 1 calc((100% - 40px) / 3);
+        flex: 0 1 calc((100% - 60px) / 4);
         min-width: 0;
       }
 
+      .cards:has(> .card:nth-child(5)) > .card {
+        flex-basis: calc((100% - 40px) / 3);
+      }
+
       @media (max-width: 1100px) {
-        .cards > .card {
+        .cards > .card,
+        .cards:has(> .card:nth-child(5)) > .card {
           flex-basis: calc((100% - 20px) / 2);
         }
       }
@@ -771,7 +776,8 @@
           grid-template-columns: 1fr;
         }
 
-        .cards > .card {
+        .cards > .card,
+        .cards:has(> .card:nth-child(5)) > .card {
           flex-basis: 100%;
         }
 
@@ -933,6 +939,8 @@
             </div>
           </article>
 
+          <!-- Twist Monsters (WIP) is hidden while it is a work in progress.
+               To show it again, delete this line and the end-of-comment line after the card.
           <article class="card" data-play="https://andersonigarashi.github.io/twistMonsters/play.html" style="--accent: rgba(123, 60, 255, 0.55)">
             <div class="stage">
               <div class="phone">
@@ -942,7 +950,7 @@
               <button class="btn ghost stop-btn" type="button">■ Stop</button>
             </div>
             <div class="card-body">
-              <h3>Twist Monsters</h3>
+              <h3>Twist Monsters (WIP)</h3>
               <p>
                 My 2019 Unity arrow game, ported to a 20-second playable. Shoot a spinning shadow monster without hitting
                 your own arrows, survive its laser, then spend the souls it drops. The sprites, sounds and timings come
@@ -961,6 +969,7 @@
               </p>
             </div>
           </article>
+          -->
 
           <article class="card" data-play="https://andersonigarashi.github.io/coloring_using_number/play.html" style="--accent: rgba(255, 210, 63, 0.4)">
             <div class="stage">
